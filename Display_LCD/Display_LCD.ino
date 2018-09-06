@@ -12,7 +12,6 @@
 #include <LiquidCrystal.h>
 
 
-
 /**********************************************************************
  * 
  * Protótipo de função
@@ -20,11 +19,17 @@
  **********************************************************************/
 void imprime_LCD();
 
+
 /* Fazer os ajustes necessários em termos de conexão */
 LiquidCrystal Display_LCD(12, 11, 5, 4, 3, 2);
-
 static char stringHora[10];
- 
+
+
+/**********************************************************************
+ * 
+ * Função Setup
+ * 
+ **********************************************************************/
 void setup()
 {
   /* Display de 16 colunas e 2 linhas */
@@ -35,12 +40,11 @@ void setup()
  
 void loop()
 {
-  
+    
 }
 
 
 void imprime_LCD(){
-
   /* Limpa a tela */
   Display_LCD.clear();
   
