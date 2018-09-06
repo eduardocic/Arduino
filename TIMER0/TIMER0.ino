@@ -72,6 +72,7 @@ static int hora    = 0;
 static int dia     = 0;
 
 int flag = 0;
+char stringHora[10];
 
 /******************************************************** 
  *  
@@ -183,10 +184,13 @@ void configTimer0(){
 
 
 void printa(){
-  Serial.print(hora);
-  Serial.print(":");
-  Serial.print(minuto);
-  Serial.print(":");
-  Serial.println(segundo);
+  int m;
+  m = sprintf(stringHora, "%2d:%2d:%2d", hora, minuto, segundo);
+  Serial.println(stringHora);
+//  Serial.print(hora);
+//  Serial.print(":");
+//  Serial.print(minuto);
+//  Serial.print(":");
+//  Serial.println(segundo);
 }
 
