@@ -126,18 +126,16 @@ ISR(TIMER0_COMPA_vect)
      if ( segundo == 60 ){
        minuto++;
        segundo = 0;
+       if ( minuto == 60 ){
+         hora++;
+         minuto = 0;
+         if ( hora == 24 ){
+           dia++;
+           hora = 0;
+         }
+       }
      }
-
-     if ( minuto == 60 ){
-       hora++;
-       minuto = 0;
-     }
-
-     if ( hora == 24 ){
-       dia++;
-       hora = 0;
-     }
-
+     
      // Alerta por LED para acompanhamento da atividade.
      if (flag == 0){
        digitalWrite(LED, HIGH);    
