@@ -216,10 +216,50 @@ void imprimeLCD(){
   Display_LCD.print(dia);
 
   int m;
-  m = sprintf(stringHora, "%2d:%2d:%2d", hora, minuto, segundo);
+
+  /* Tocante -- HORA */
+  if ( hora < 10 ){
+    /* Tocante -- MINUTO */
+    if ( minuto < 10 ){
+      /* Tocante -- SEGUNDO */
+      if (segundo < 10 ){
+        m = sprintf(stringHora, "0%d:0%d:0%d", hora, minuto, segundo);
+      }
+      else {
+        m = sprintf(stringHora, "0%d:0%d:%d", hora, minuto, segundo);
+      }
+    }
+    else{
+      if ( segundo < 10 ){
+        m = sprintf(stringHora, "0%d:%d:0%d", hora, minuto, segundo);
+      }
+      else {
+        m = sprintf(stringHora, "0%d:%d:%d", hora, minuto, segundo);
+      }
+    }
+  }
+  else {
+    /* Tocante -- MINUTO */
+    if ( minuto < 10 ){
+      /* Tocante -- SEGUNDO */
+      if (segundo < 10 ){
+        m = sprintf(stringHora, "%d:0%d:0%d", hora, minuto, segundo);
+      }
+      else {
+        m = sprintf(stringHora, "%d:0%d:%d", hora, minuto, segundo);
+      }
+    }
+    else{
+      if ( segundo < 10 ){
+        m = sprintf(stringHora, "%d:%d:0%d", hora, minuto, segundo);
+      }
+      else {
+        m = sprintf(stringHora, "%d:%d:%d", hora, minuto, segundo);
+      }
+    }
+  }
+
   /* Posiciona o cursor na coluna 0, linha 1 */
   Display_LCD.setCursor(0, 1);
   Display_LCD.print(stringHora);    
 }
-
-
