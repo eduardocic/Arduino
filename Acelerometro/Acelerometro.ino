@@ -81,8 +81,15 @@ byte ZOUT = 0x02;
 // que a resposta dada já apresente um resultado filtrado.
 byte SR   = 0x08;
 
-
+// Variável para salvar os parâmetros dos acelerômetros.
 byte x, y, z;
+
+// Passo de aceleração.
+float delta_a = 0.046875;
+
+// Saídas para a presentação do sistema.
+float x_g, y_g, z_g;
+
 
 void setup(){
   // Inicia a serial;
@@ -115,10 +122,11 @@ void setup(){
 
 void loop()
 {
+  
   // Lendo os dados do endereço de XOUT, YOUT e ZOUT.
   // ------------------------------------------------
   Wire.requestFrom(Acelerometro, byte(3));
-  if ( Wire.available() >= 1 ){
+  if ( Wire.available()){
     x = Wire.read();
     y = Wire.read();
     z = Wire.read();    
@@ -134,16 +142,56 @@ void loop()
 
   // Falta apenas criar um código para utilização da álgebra do comple-
   // mento 2.
+  // -------------------------------------------------------------------
+  //
+  //  Para 'x'.
+  // ----------
+  if (x > 31){
+    x = ~x;
+    x++;
+    x = x << 2;
+    x = x >> 2;
+    x_g = (float)(x*(-delta_a));
+  }
+  else{
+    x_g = (float)(x*(delta_a));
+  }
+  
+  //  Para 'y'.
+  // ----------
+  if (y > 31){
+    y = ~y;
+    y++;
+    y = y << 2;
+    y = y >> 2;
+    y_g = (float)(y*(-delta_a));
+  }
+  else{
+    y_g = (float)(y*(delta_a));
+  }
 
-
-
+  //  Para 'z'.
+  // ----------
+  if (z > 31){
+    z = ~z;
+    z++;
+    z = z << 2;
+    z = z >> 2;
+    z_g = (float)(z*(-delta_a));
+  }
+  else{
+    z_g = (float)(z*(delta_a));
+  }
+    
+  
   // Amostra o resultado no terminal.
   // --------------------------------
   Serial.print("Valores: ");
-  Serial.print(x);
-  Serial.print(", ");
-  Serial.print(y);
-  Serial.print(", ");
-  Serial.println(z);
+  Serial.print(x_g);
+  Serial.print("g, ");
+  Serial.print(y_g);
+  Serial.print("g, ");
+  Serial.print(z_g);
+  Serial.println("g");
   delay(1000);
 }
