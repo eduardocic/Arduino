@@ -68,18 +68,18 @@
 // Dispositivo de endereço de 7 bits: 1101100 -- Acelerômetro.
 byte Acelerometro = 0x4C;
 
-// Configuração de modo de operação. No caso queremos modo ACTIVE.
-byte MODE = 0x07;
-
-// Registradores para pegar as acelerações.
-byte XOUT = 0x00;
-byte YOUT = 0x01;
-byte ZOUT = 0x02;
-
-// Demais registradores para configurar que desejamos as informações em uma
-// taxa de 1 amostra por segundo com a filtragem de 8 medidas de forma
-// que a resposta dada já apresente um resultado filtrado.
-byte SR   = 0x08;
+// Registradores do dispositivo.
+byte XOUT  = 0x00;
+byte YOUT  = 0x01;
+byte ZOUT  = 0x02;
+byte TLT   = 0x03;
+byte SRST  = 0x04;
+byte SPCNT = 0x05;
+byte INTSU = 0x06;
+byte MODE  = 0x07;
+byte SR    = 0x08;
+byte PDET  = 0x09;
+byte PD    = 0x0A;
 
 // Variável para salvar os parâmetros dos acelerômetros.
 byte x, y, z;
@@ -115,6 +115,16 @@ void setup(){
   Wire.write(0xE7);
   Wire.endTransmission();   
 
+
+  // 3. Tentar configurar para receber as informações a partir de 
+  //    interrupção.
+  // ---------------------------------------------------------------
+  Wire.beginTransmission(Acelerometro);
+  Wire.write(INTSU);             
+  Wire.write(0x10);
+  Wire.endTransmission();   
+
+
   // Apenas para estabilizar a malha.
   // --------------------------------
   delay(100);
@@ -133,7 +143,6 @@ void loop()
   }    
   Wire.endTransmission();
   
-
   // Eliminando qualquer termo que exista nos bits 7 e 8 do registrador.
   // -------------------------------------------------------------------
   x = (x << 2)/4;
