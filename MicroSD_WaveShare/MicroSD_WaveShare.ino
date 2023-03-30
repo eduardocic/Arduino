@@ -8,7 +8,16 @@
  *   O dispositivo o qual eu possuo é da empresa 'WaveShare' e já possui, em 
  * princípio, os resistores necessários que alimentar todas as portas do dispo-
  * tivo diretamente com 3.3V. No caso, a saída do Arduino será 5V, mas a queda
- * de tensão é tal que eu tenho 3.3V entrando no cartão Micro SD.
+ * de tensão é tal que eu tenho 3.3V entrando no cartão Micro SD. Ou seja, se a
+ * gente liga o pino de tensão de 3.3V do WaveShare diretamente no 5V a gente 
+ * consegue fazer o gravador de SD funcionar.
+ *
+ *  ------  ATUALIZAÇÃO 30/03/2023 --------
+ *
+ * -> destaco que para utilização no Arduino Nano, por algum motivo que não sei
+ *    explicar, eu só consegui fazer o SD funcionar quando eu liguei o pino de
+ *    3.3V do WaveShate diretamente no Vin do arduino. As demais pinagens abaixo
+ *    funcionaram perfeitamente. 
  * 
  *   Em termos de ligação elétrica, com o arduino ainda não ligado na porta USB
  * da máquina, você conecta conforme:
@@ -20,9 +29,11 @@
  *    |         MISO         |   pino Digital 12   | 
  *    |         SCLK         |   pino Digital 13   |
  *    |         CS           |   pino Digital 4    |
- *    |         3.3V         |   Alimentação 3.3V  |
+ *    |         3.3V*        |   Alimentação 5V  |
  *    |         GND          |         GND         |
  *    ==============================================
+ *  
+ *  (*) vide atualização realizada lá em cima (dia 30/03/2023).
  * 
  *   Agora você cria um arquivo de nome '*.txt', em que '*' diz respeito ao nome
  * de seu interesse. No meu caso, eu abri um arquivo EM BRANCO e salvei o mesmo
